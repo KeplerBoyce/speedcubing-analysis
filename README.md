@@ -1,2 +1,2 @@
 # speedcubing-analysis
-Speedcubing data in tsv format and analysis script in Python for research project
+Run cubinganalysis.py in the same directory as both tsv files to generate graphs
