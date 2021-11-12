@@ -107,6 +107,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     pausefrac = list(solves_by_var[4])
     
     tps = list(solves_by_var[5])
+    tps2 = list(solves_by_var[5])
     etps = list(solves_by_var[6])
     
     regrips = list(solves_by_var[7])
@@ -117,6 +118,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     crossmoves = list(solves_by_var[11])
     f2lmoves = list(solves_by_var[12])
     lastlayermoves = list(solves_by_var[13])
+    totalmoves = [a + b + c for a, b, c in zip(crossmoves, f2lmoves, lastlayermoves)]
     
     crosspauses = list(solves_by_var[14])
     ctofpauses = list(solves_by_var[15])
@@ -136,6 +138,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
         ind = pausefrac.index(-1)
         del pausefrac[ind]
         del solvetimes2[ind]
+        del tps2[ind]
         del etps[ind]
         del crosspauses[ind]
         del ctofpauses[ind]
@@ -222,7 +225,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     #graph for number of regrips, rotations, tilts, and AUFs
     plt.figure(3)
     plt.xlim(5, 35)
-    plt.ylim(0, 40)
+    plt.ylim(-1, 40)
     
     plt.title("Regrips, rotations, tilts, and AUFs vs. solve time")
     plt.xlabel('Solve time (s)')
@@ -252,7 +255,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     #graph for move counts
     plt.figure(4)
     plt.xlim(5, 35)
-    plt.ylim(0, 50)
+    plt.ylim(0, 100)
     
     plt.title("Move counts for each step vs. solve time")
     plt.xlabel('Solve time (s)')
@@ -261,14 +264,17 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.scatter(solvetimes, crossmoves, s=5)
     plt.scatter(solvetimes, f2lmoves, s=5)
     plt.scatter(solvetimes, lastlayermoves, s=5)
+    plt.scatter(solvetimes, totalmoves, s=5)
     
     f11 = np.poly1d(np.polyfit(solvetimes, crossmoves, 1))
     f12 = np.poly1d(np.polyfit(solvetimes, f2lmoves, 1))
     f13 = np.poly1d(np.polyfit(solvetimes, lastlayermoves, 1))
+    f14 = np.poly1d(np.polyfit(solvetimes, totalmoves, 1))
     
     plt.plot(x, f11(x), label='Cross')
     plt.plot(x, f12(x), label='F2L')
     plt.plot(x, f13(x), label='Last layer')
+    plt.plot(x, f14(x), label='Total')
     
     plt.legend()
     plt.minorticks_on()
@@ -279,7 +285,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     #graph for pauses for each step
     plt.figure(5)
     plt.xlim(5, 35)
-    plt.ylim(0, 8)
+    plt.ylim(-0.25, 8)
     
     plt.title("Pause times for each step vs. solve time")
     plt.xlabel('Solve time (s)')
@@ -290,15 +296,15 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.scatter(solvetimes2, lastlayerpauses, s=5)
     plt.scatter(solvetimes2, ctofpauses, s=5)
     
-    f14 = np.poly1d(np.polyfit(solvetimes2, crosspauses, 1))
-    f15 = np.poly1d(np.polyfit(solvetimes2, ctofpauses, 1))
-    f16 = np.poly1d(np.polyfit(solvetimes2, f2lpauses, 1))
-    f17 = np.poly1d(np.polyfit(solvetimes2, lastlayerpauses, 1))
+    f15 = np.poly1d(np.polyfit(solvetimes2, crosspauses, 1))
+    f16 = np.poly1d(np.polyfit(solvetimes2, ctofpauses, 1))
+    f17 = np.poly1d(np.polyfit(solvetimes2, f2lpauses, 1))
+    f18 = np.poly1d(np.polyfit(solvetimes2, lastlayerpauses, 1))
     
-    plt.plot(x, f14(x), label='Cross')
+    plt.plot(x, f15(x), label='Cross')
     plt.plot(x, f16(x), label='F2L')
     plt.plot(x, f17(x), label='Last layer')
-    plt.plot(x, f15(x), label='Cross to F2L transition')
+    plt.plot(x, f18(x), label='Cross to F2L transition')
     
     plt.legend()
     plt.minorticks_on()
@@ -319,13 +325,13 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.scatter(solvetimes, f2ltps, s=5)
     plt.scatter(solvetimes, lastlayertps, s=5)
     
-    f18 = np.poly1d(np.polyfit(solvetimes, crosstps, 1))
-    f19 = np.poly1d(np.polyfit(solvetimes, f2ltps, 1))
-    f20 = np.poly1d(np.polyfit(solvetimes, lastlayertps, 1))
+    f19 = np.poly1d(np.polyfit(solvetimes, crosstps, 1))
+    f20 = np.poly1d(np.polyfit(solvetimes, f2ltps, 1))
+    f21 = np.poly1d(np.polyfit(solvetimes, lastlayertps, 1))
     
-    plt.plot(x, f18(x), label='Cross')
-    plt.plot(x, f19(x), label='F2L')
-    plt.plot(x, f20(x), label='Last layer')
+    plt.plot(x, f19(x), label='Cross')
+    plt.plot(x, f20(x), label='F2L')
+    plt.plot(x, f21(x), label='Last layer')
     
     plt.legend()
     plt.minorticks_on()
@@ -336,7 +342,7 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     #graph for pause fractions for each step
     plt.figure(7)
     plt.xlim(5, 35)
-    plt.ylim(0, 0.8)
+    plt.ylim(-0.025, 0.8)
     
     plt.title("Fraction of each step spent pausing vs. solve time")
     plt.xlabel('Solve time (s)')
@@ -346,19 +352,40 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.scatter(solvetimes2, f2lpausefrac, s=5)
     plt.scatter(solvetimes2, lastlayerpausefrac, s=5)
     
-    f21 = np.poly1d(np.polyfit(solvetimes2, crosspausefrac, 1))
-    f22 = np.poly1d(np.polyfit(solvetimes2, f2lpausefrac, 1))
-    f23 = np.poly1d(np.polyfit(solvetimes2, lastlayerpausefrac, 1))
+    f22 = np.poly1d(np.polyfit(solvetimes2, crosspausefrac, 1))
+    f23 = np.poly1d(np.polyfit(solvetimes2, f2lpausefrac, 1))
+    f24 = np.poly1d(np.polyfit(solvetimes2, lastlayerpausefrac, 1))
     
-    plt.plot(x, f21(x), label='Cross')
-    plt.plot(x, f22(x), label='F2L')
-    plt.plot(x, f23(x), label='Last layer')
+    plt.plot(x, f22(x), label='Cross')
+    plt.plot(x, f23(x), label='F2L')
+    plt.plot(x, f24(x), label='Last layer')
     
     plt.legend()
     plt.minorticks_on()
     plt.grid(which='major', alpha=0.6)
     plt.grid(which='minor', alpha=0.3)
     plt.savefig('graphs\Fraction of each step spent pausing vs solve time.png', dpi=400)
+    
+    #graph for pause fraction vs. TPS
+    plt.figure(8)
+    plt.xlim(1, 9)
+    plt.ylim(0.1, 0.7)
+    
+    plt.title("Fraction of solve spent pausing vs. TPS")
+    plt.xlabel('Turns per second')
+    plt.ylabel('Fraction of solve time')
+    
+    plt.scatter(tps2, pausefrac, s=5)
+    
+    f25 = np.poly1d(np.polyfit(tps2, pausefrac, 1))
+    
+    plt.plot(x, f25(x))
+    
+    plt.legend()
+    plt.minorticks_on()
+    plt.grid(which='major', alpha=0.6)
+    plt.grid(which='minor', alpha=0.3)
+    plt.savefig('graphs\Fraction of solve spent pausing vs TPS.png', dpi=400)
 
 #reddit survey data
 with open('Mega Survey.tsv', newline='') as csvfile:
@@ -442,7 +469,7 @@ with open('Mega Survey.tsv', newline='') as csvfile:
         return a * x
     
     #graph for ao100 vs. months of speedcubing
-    plt.figure(8)
+    plt.figure(9)
     plt.xlim(0, 84)
     plt.ylim(0, 60)
     
@@ -462,7 +489,7 @@ with open('Mega Survey.tsv', newline='') as csvfile:
     plt.savefig('graphs\Ao100 vs months of speedcubing.png', dpi=400)
     
     #graph for ao100 vs. number of algs known
-    plt.figure(9)
+    plt.figure(10)
     plt.xlim(0, 300)
     plt.ylim(0, 60)
     
@@ -482,7 +509,7 @@ with open('Mega Survey.tsv', newline='') as csvfile:
     plt.savefig('graphs\Ao100 vs number of algorithms known.png', dpi=400)
     
     #graph for pb single, ao5, and ao12 vs ao100
-    plt.figure(10)
+    plt.figure(11)
     plt.xlim(0, 60)
     plt.ylim(0, 60)
     
