@@ -5,9 +5,10 @@ import statistics as stats
 from scipy.optimize import curve_fit
 import os.path
 
-solves = list()#video analysis data
-responses = list()#survey responses
-algnums = {#dict for how many algs are in each algset
+SHOW_TITLES = True #whether to add titles to graphs or not
+solves = list() #video analysis data
+responses = list() #survey responses
+algnums = { #dict for how many algs are in each algset
     '2GLL - AS' : 12,
     '2GLL - H' : 8,
     '2GLL - L' : 12,
@@ -156,7 +157,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(0, 0.7)
     
-    plt.title("Fraction of solve spent in each step vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Fraction of solve spent in each step vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Fraction of solve time')
     
@@ -183,7 +185,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(0.2, 0.7)
     
-    plt.title("Fraction of solve spent pausing vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Fraction of solve spent pausing vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Fraction of solve time')
         
@@ -203,7 +206,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(0, 12)
     
-    plt.title("Overall TPS vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Overall TPS vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Turns per second')
         
@@ -227,7 +231,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(-1, 40)
     
-    plt.title("Regrips, rotations, tilts, and AUFs vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Regrips, rotations, tilts, and AUFs vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Count')
     
@@ -257,7 +262,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(0, 100)
     
-    plt.title("Move counts for each step vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Move counts for each step vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Move count')
     
@@ -287,7 +293,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(-0.25, 8)
     
-    plt.title("Pause times for each step vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Pause times for each step vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Total pause time (s)')
     
@@ -317,7 +324,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(0, 10)
     
-    plt.title("TPS for each step vs. solve time")
+    if SHOW_TITLES:
+        plt.title("TPS for each step vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Turns per second')
     
@@ -344,7 +352,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(5, 35)
     plt.ylim(-0.025, 0.8)
     
-    plt.title("Fraction of each step spent pausing vs. solve time")
+    if SHOW_TITLES:
+        plt.title("Fraction of each step spent pausing vs. solve time")
     plt.xlabel('Solve time (s)')
     plt.ylabel('Fraction of step time')
     
@@ -371,7 +380,8 @@ with open('Video Analysis.tsv', newline='') as csvfile:
     plt.xlim(1, 9)
     plt.ylim(0.1, 0.7)
     
-    plt.title("Fraction of solve spent pausing vs. TPS")
+    if SHOW_TITLES:
+        plt.title("Fraction of solve spent pausing vs. TPS")
     plt.xlabel('Turns per second')
     plt.ylabel('Fraction of solve time')
     
@@ -473,7 +483,8 @@ with open('Mega Survey.tsv', newline='') as csvfile:
     plt.xlim(0, 84)
     plt.ylim(0, 60)
     
-    plt.title("Ao100 vs. months of speedcubing")
+    if SHOW_TITLES:
+        plt.title("Ao100 vs. months of speedcubing")
     plt.xlabel('Months')
     plt.ylabel('Ao100 (s)')
     
@@ -493,7 +504,8 @@ with open('Mega Survey.tsv', newline='') as csvfile:
     plt.xlim(0, 300)
     plt.ylim(0, 60)
     
-    plt.title("Ao100 vs. number of algorithms known")
+    if SHOW_TITLES:
+        plt.title("Ao100 vs. number of algorithms known")
     plt.xlabel('Number of algorithms known')
     plt.ylabel('Ao100 (s)')
     
@@ -513,7 +525,8 @@ with open('Mega Survey.tsv', newline='') as csvfile:
     plt.xlim(0, 60)
     plt.ylim(0, 60)
     
-    plt.title("PB single, Ao5, and Ao12 vs. Ao100")
+    if SHOW_TITLES:
+        plt.title("PB single, Ao5, and Ao12 vs. Ao100")
     plt.xlabel('Ao100 (s)')
     plt.ylabel('Time (s)')
     
